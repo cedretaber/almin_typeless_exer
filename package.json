@@ -1,0 +1,36 @@
+{
+  "name": "at_exer",
+  "version": "1.0.0",
+  "author": "cedretaber <cedretaber@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "bundle": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "@types/node": "^11.13.0",
+    "@types/react-router": "^4.4.5",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/webpack": "^4.4.27",
+    "@types/webpack-dev-server": "^3.1.5",
+    "@types/react": "^16.8.10",
+    "@types/react-dom": "^16.8.3",
+    "awesome-typescript-loader": "^5.2.1",
+    "source-map-loader": "^0.2.4",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.4.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "almin": "^0.18.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
+    "redux": "^4.0.1",
+    "rxjs": "^6.4.0",
+    "typeless": "^0.0.18"
+  }
+}
