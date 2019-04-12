@@ -18,17 +18,19 @@ const BookTable = (props: {
         <td>{book.author}</td>
         <td>
           <Link to={`${props.routeProps.match.path}/books/${book.id}`}>
-            edit
+            <i className="icon icon-edit" />
           </Link>
-        </td>
-        <td>
-          <a onClick={_ => props.deleteBook(book.id)}>delete</a>
+          <i
+            className="icon icon-cross text-error"
+            style={{ cursor: "pointer", marginLeft: "1rem" }}
+            onClick={_ => props.deleteBook(book.id)}
+          />
         </td>
       </tr>
     );
   });
   return (
-    <table>
+    <table className="table">
       <thead>
         <tr>
           <th>ID</th>

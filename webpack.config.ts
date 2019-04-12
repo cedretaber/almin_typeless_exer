@@ -23,6 +23,16 @@ const config: webpack.Configuration = {
   module: {
     rules: [
       { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: { url: false }
+          }
+        ]
+      },
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]
   },

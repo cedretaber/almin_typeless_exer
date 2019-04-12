@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import * as Almin from "./almin/component/Index";
 import { alminIndexUrl, rootUrl } from "./Consts";
+require("./style.css");
 
 const Home = () => {
   return (
@@ -17,12 +18,20 @@ const Home = () => {
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <div>
-        <Route exact path={rootUrl} component={Home} />
-        <Route path={alminIndexUrl} component={Almin.Index} />
+    <>
+      <header />
+      <div className="contaienr">
+        <BrowserRouter>
+          <div className="columns">
+            <div className="column col-8 col-mx-auto">
+              <Route exact path={rootUrl} component={Home} />
+              <Route path={alminIndexUrl} component={Almin.Index} />
+            </div>
+          </div>
+        </BrowserRouter>
       </div>
-    </BrowserRouter>
+      <footer />
+    </>
   );
 };
 

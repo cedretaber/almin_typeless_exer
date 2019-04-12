@@ -78,18 +78,33 @@ export default class BookPage extends React.Component<
     const { id, title, author } = this.state.formStore;
     return (
       <form>
-        <input
-          type="text"
-          value={title || ""}
-          onChange={e => this.onTitleChange(e)}
-        />
-        <input
-          type="text"
-          value={author || ""}
-          onChange={e => this.onAuthorChange(e)}
-        />
+        <div className="form-group">
+          <label className="form-label" htmlFor="title-imput">
+            Title
+          </label>
+          <input
+            type="text"
+            id="title-input"
+            className="form-input"
+            value={title || ""}
+            onChange={e => this.onTitleChange(e)}
+          />
+        </div>
+        <div className="form-group">
+          <label className="form-label" htmlFor="author-input">
+            Author
+          </label>
+          <input
+            type="text"
+            id="author-input"
+            className="form-input"
+            value={author || ""}
+            onChange={e => this.onAuthorChange(e)}
+          />
+        </div>
         <input
           type="submit"
+          className="btn"
           value={id ? "Update" : "Create"}
           onClick={e => this.onSubmit(e)}
         />
