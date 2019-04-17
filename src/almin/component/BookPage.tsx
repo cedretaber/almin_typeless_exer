@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import { booksContext } from "./Index";
 import UpdateBookTitleUseCase from "../usecase/UpdateBookTitleUseCase";
 import UpdateBookAuthorUseCase from "../usecase/UpdateBookAuthorUseCase";
@@ -7,6 +7,7 @@ import CreateBookUseCase from "../usecase/CreateBookUseCase";
 import UpdateBookUseCase from "../usecase/UpdateBookUseCase";
 import FetchBookUseCase from "../usecase/FetchBookUseCase";
 import ClearBookUseCase from "../usecase/ClearBookUseCase";
+import { alminIndexUrl } from "../../Consts";
 
 interface Props {
   booksContext: typeof booksContext;
@@ -77,38 +78,42 @@ export default class BookPage extends React.Component<
   render() {
     const { id, title, author } = this.state.formStore;
     return (
-      <form>
-        <div className="form-group">
-          <label className="form-label" htmlFor="title-imput">
-            Title
-          </label>
+      <div>
+        <form>
+          <div className="form-group">
+            <label className="form-label" htmlFor="title-imput">
+              Title
+            </label>
+            <input
+              type="text"
+              id="title-input"
+              className="form-input"
+              value={title || ""}
+              onChange={e => this.onTitleChange(e)}
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label" htmlFor="author-input">
+              Author
+            </label>
+            <input
+              type="text"
+              id="author-input"
+              className="form-input"
+              value={author || ""}
+              onChange={e => this.onAuthorChange(e)}
+            />
+          </div>
           <input
-            type="text"
-            id="title-input"
-            className="form-input"
-            value={title || ""}
-            onChange={e => this.onTitleChange(e)}
+            type="submit"
+            className="btn"
+            value={id ? "Update" : "Create"}
+            onClick={e => this.onSubmit(e)}
           />
-        </div>
-        <div className="form-group">
-          <label className="form-label" htmlFor="author-input">
-            Author
-          </label>
-          <input
-            type="text"
-            id="author-input"
-            className="form-input"
-            value={author || ""}
-            onChange={e => this.onAuthorChange(e)}
-          />
-        </div>
-        <input
-          type="submit"
-          className="btn"
-          value={id ? "Update" : "Create"}
-          onClick={e => this.onSubmit(e)}
-        />
-      </form>
+        </form>
+        <br />
+        <Link to={alminIndexUrl}>back</Link>
+      </div>
     );
   }
 }

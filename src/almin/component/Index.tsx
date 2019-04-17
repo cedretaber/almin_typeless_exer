@@ -42,10 +42,7 @@ export const Index = ({ match }: RouteComponentProps) => {
   return (
     <>
       <Route exact path={`${match.path}`} component={BooksPageComponent} />
-      <Route
-        path={`${match.path}/books/:bookId`}
-        component={BookPageComponent}
-      />
+      <Route path={`${match.path}/:bookId`} component={BookPageComponent} />
     </>
   );
 };

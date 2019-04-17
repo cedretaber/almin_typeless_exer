@@ -4,6 +4,7 @@ import Book from "../entity/Book";
 import { booksContext } from "./Index";
 import FetchBooksUseCase from "../usecase/FetchBooksUseCase";
 import DeleteBookUseCase from "../usecase/DeleteBookUseCase";
+import { rootUrl } from "../../Consts";
 
 const BookTable = (props: {
   books: Book[];
@@ -17,7 +18,7 @@ const BookTable = (props: {
         <td>{book.title}</td>
         <td>{book.author}</td>
         <td>
-          <Link to={`${props.routeProps.match.path}/books/${book.id}`}>
+          <Link to={`${props.routeProps.match.path}/${book.id}`}>
             <i className="icon icon-edit" />
           </Link>
           <i
@@ -93,6 +94,8 @@ export default class BooksPage extends React.Component<
           deleteBook={id => this.deleteBook(id)}
           routeProps={this.props.routeProps}
         />
+        <br />
+        <Link to={rootUrl}>back</Link>
       </div>
     );
   }
