@@ -2,16 +2,22 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import * as Almin from "./almin/component/Index";
-import { alminIndexUrl, rootUrl } from "./Consts";
+import * as Typeless from "./typeless/Index";
+import { alminIndexUrl, rootUrl, typelessIndexUrl } from "./Consts";
 require("./style.css");
 
 const Home = () => {
   return (
     <>
       <h1>Almin - Typeless 比較</h1>
-      <div>
-        <Link to={alminIndexUrl}>Almin</Link>
-      </div>
+      <ul>
+        <li>
+          <Link to={alminIndexUrl}>Almin</Link>
+        </li>
+        <li>
+          <Link to={typelessIndexUrl}>Typeless</Link>
+        </li>
+      </ul>
     </>
   );
 };
@@ -26,6 +32,7 @@ const App = () => {
             <div className="column col-8 col-mx-auto">
               <Route exact path={rootUrl} component={Home} />
               <Route path={alminIndexUrl} component={Almin.Index} />
+              <Route path={typelessIndexUrl} component={Typeless.Index} />
             </div>
           </div>
         </BrowserRouter>

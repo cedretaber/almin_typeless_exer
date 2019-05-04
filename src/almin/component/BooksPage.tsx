@@ -88,7 +88,7 @@ export default class BooksPage extends React.Component<
     return (
       <div>
         <h2>Book Index</h2>
-        <Link to={`${this.props.routeProps.match.path}/books/new`}>new</Link>
+        <Link to={`${this.props.routeProps.match.path}/new`}>new</Link>
         <BookTable
           books={books}
           deleteBook={id => this.deleteBook(id)}
