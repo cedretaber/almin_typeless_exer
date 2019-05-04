@@ -1,16 +1,19 @@
 import * as React from "react";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useActions, useMappedState } from "typeless";
 import { BooksActions } from "../interface";
 import Book from "../../entities/Book";
 import { rootUrl } from "../../../../Consts";
+import { RouteContext } from "../../../Index";
 
 const BookTable = (props: {
   books: Book[] | null;
   deleteBook: (id: number) => void;
-  routeProps: RouteComponentProps;
 }) => {
+  const route = React.useContext(RouteContext);
+
   if (props.books === null) return <table />;
+
   const tbody = props.books.map((book, idx) => {
     return (
       <tr key={`typeless_books_table_${idx}`}>
@@ -18,7 +21,7 @@ const BookTable = (props: {
         <td>{book.title}</td>
         <td>{book.author}</td>
         <td>
-          <Link to={`${props.routeProps.match.path}/${book.id}`}>
+          <Link to={`${route.match.path}/${book.id}`}>
             <i className="icon icon-edit" />
           </Link>
           <i
@@ -45,9 +48,10 @@ const BookTable = (props: {
   );
 };
 
-export function BooksView(props: { routeProps: RouteComponentProps }) {
+export function BooksView() {
   const { fetchBooks, deleteBook } = useActions(BooksActions);
   const { books } = useMappedState(state => state.books);
+  const route = React.useContext(RouteContext);
 
   React.useEffect(() => {
     if (books === null) {
@@ -58,12 +62,8 @@ export function BooksView(props: { routeProps: RouteComponentProps }) {
   return (
     <div>
       <h2>Book Index</h2>
-      <Link to={`${props.routeProps.match.path}/new`}>new</Link>
-      <BookTable
-        books={books}
-        deleteBook={id => deleteBook(id)}
-        routeProps={props.routeProps}
-      />
+      <Link to={`${route.match.path}/new`}>new</Link>
+      <BookTable books={books} deleteBook={id => deleteBook(id)} />
       <br />
       <Link to={rootUrl}>back</Link>
     </div>

@@ -4,9 +4,9 @@ import { useActions, useMappedState } from "typeless";
 import { BookActions } from "../interface";
 import Book from "../../entities/Book";
 import { typelessIndexUrl } from "../../../../Consts";
-import { History } from "history";
+import { RouteContext } from "../../../Index";
 
-export function BookView(props: { id?: number; history: History }) {
+export function BookView(props: { id?: number }) {
   const {
     fetchBook,
     createBook,
@@ -15,7 +15,8 @@ export function BookView(props: { id?: number; history: History }) {
     updateAuthor
   } = useActions(BookActions);
   const { title, author } = useMappedState(state => state.book);
-  const history = props.history;
+  const route = React.useContext(RouteContext);
+  const history = route.history;
 
   React.useEffect(() => {
     if (props.id !== undefined) {

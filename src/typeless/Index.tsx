@@ -8,19 +8,20 @@ import { BookView } from "./features/book/components/BookView";
 
 const { TypelessProvider } = initialize();
 
+export const RouteContext = React.createContext<RouteComponentProps>(null);
+
 const BooksPageComponent = (routeProps: RouteComponentProps) => {
-  return <BooksView routeProps={routeProps} />;
+  return <BooksView />;
 };
 
 const BookPageComponent = (
   routeProps: RouteComponentProps<{ bookId: string }>
 ) => {
-  const history = routeProps.history;
   const id = Number(routeProps.match.params.bookId);
   if (isNaN(id)) {
-    return <BookView history={history} />;
+    return <BookView />;
   } else {
-    return <BookView id={id} history={history} />;
+    return <BookView id={id} />;
   }
 };
 
@@ -39,8 +40,10 @@ const App = (props: { routeProps: RouteComponentProps }) => {
 
 export const Index = (routeProps: RouteComponentProps) => {
   return (
-    <TypelessProvider>
-      <App routeProps={routeProps} />
-    </TypelessProvider>
+    <RouteContext.Provider value={routeProps}>
+      <TypelessProvider>
+        <App routeProps={routeProps} />
+      </TypelessProvider>
+    </RouteContext.Provider>
   );
 };
