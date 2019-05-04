@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { booksContext } from "./Index";
 import UpdateBookTitleUseCase from "../usecase/UpdateBookTitleUseCase";
 import UpdateBookAuthorUseCase from "../usecase/UpdateBookAuthorUseCase";
@@ -8,17 +8,19 @@ import UpdateBookUseCase from "../usecase/UpdateBookUseCase";
 import FetchBookUseCase from "../usecase/FetchBookUseCase";
 import ClearBookUseCase from "../usecase/ClearBookUseCase";
 import { alminIndexUrl } from "../../Consts";
+import { RouteContext } from "./context/RouteContext";
 
 interface Props {
   booksContext: typeof booksContext;
   bookId?: number;
-  routeProps: RouteComponentProps;
 }
 
 export default class BookPage extends React.Component<
   Props,
   ReturnType<typeof booksContext.getState>
 > {
+  static contextType = RouteContext;
+
   private unSubscribe: any;
 
   constructor(props: Props) {
@@ -44,7 +46,7 @@ export default class BookPage extends React.Component<
     e.preventDefault();
     const id = this.props.bookId;
     const { title, author } = this.state.formStore;
-    const history = this.props.routeProps.history;
+    const history = this.context.history;
     if (isNaN(id)) {
       this.props.booksContext
         .useCase(new CreateBookUseCase())

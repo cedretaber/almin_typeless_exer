@@ -1,16 +1,17 @@
 import * as React from "react";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Book from "../entity/Book";
 import { booksContext } from "./Index";
 import FetchBooksUseCase from "../usecase/FetchBooksUseCase";
 import DeleteBookUseCase from "../usecase/DeleteBookUseCase";
 import { rootUrl } from "../../Consts";
+import { RouteContext } from "./context/RouteContext";
 
 const BookTable = (props: {
   books: Book[];
   deleteBook: (id: number) => void;
-  routeProps: RouteComponentProps;
 }) => {
+  const { match } = React.useContext(RouteContext);
   const tbody = props.books.map((book, idx) => {
     return (
       <tr key={`almin_books_table_${idx}`}>
@@ -18,7 +19,7 @@ const BookTable = (props: {
         <td>{book.title}</td>
         <td>{book.author}</td>
         <td>
-          <Link to={`${props.routeProps.match.path}/${book.id}`}>
+          <Link to={`${match.path}/${book.id}`}>
             <i className="icon icon-edit" />
           </Link>
           <i
@@ -47,13 +48,14 @@ const BookTable = (props: {
 
 interface Props {
   booksContext: typeof booksContext;
-  routeProps: RouteComponentProps;
 }
 
 export default class BooksPage extends React.Component<
   Props,
   ReturnType<typeof booksContext.getState>
 > {
+  static contextType = RouteContext;
+
   private unSubscribe: any;
 
   constructor(props: Props) {
@@ -88,12 +90,8 @@ export default class BooksPage extends React.Component<
     return (
       <div>
         <h2>Book Index</h2>
-        <Link to={`${this.props.routeProps.match.path}/new`}>new</Link>
-        <BookTable
-          books={books}
-          deleteBook={id => this.deleteBook(id)}
-          routeProps={this.props.routeProps}
-        />
+        <Link to={`${this.context.match.path}/new`}>new</Link>
+        <BookTable books={books} deleteBook={id => this.deleteBook(id)} />
         <br />
         <Link to={rootUrl}>back</Link>
       </div>

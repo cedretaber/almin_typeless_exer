@@ -5,6 +5,7 @@ import BooksStore from "../store/BooksStore";
 import BookFormStore from "../store/BookFormStore";
 import BooksPage from "./BooksPage";
 import BookPage from "./BookPage";
+import { RouteContext } from "./context/RouteContext";
 
 const dispatcher = new Dispatcher();
 const booksStore = new BooksStore();
@@ -17,8 +18,8 @@ export const booksContext = new Context({
   options: { strict: true }
 });
 
-const BooksPageComponent = (routeProps: RouteComponentProps) => {
-  return <BooksPage booksContext={booksContext} routeProps={routeProps} />;
+const BooksPageComponent = () => {
+  return <BooksPage booksContext={booksContext} />;
 };
 
 const BookPageComponent = (
@@ -26,23 +27,24 @@ const BookPageComponent = (
 ) => {
   const bookId = Number(routePorps.match.params.bookId);
   if (isNaN(bookId)) {
-    return <BookPage booksContext={booksContext} routeProps={routePorps} />;
+    return <BookPage booksContext={booksContext} />;
   } else {
-    return (
-      <BookPage
-        booksContext={booksContext}
-        routeProps={routePorps}
-        bookId={bookId}
-      />
-    );
+    return <BookPage booksContext={booksContext} bookId={bookId} />;
   }
 };
 
-export const Index = ({ match }: RouteComponentProps) => {
+export const Index = (routeProps: RouteComponentProps) => {
   return (
-    <>
-      <Route exact path={`${match.path}`} component={BooksPageComponent} />
-      <Route path={`${match.path}/:bookId`} component={BookPageComponent} />
-    </>
+    <RouteContext.Provider value={routeProps}>
+      <Route
+        exact
+        path={`${routeProps.match.path}`}
+        component={BooksPageComponent}
+      />
+      <Route
+        path={`${routeProps.match.path}/:bookId`}
+        component={BookPageComponent}
+      />
+    </RouteContext.Provider>
   );
 };
