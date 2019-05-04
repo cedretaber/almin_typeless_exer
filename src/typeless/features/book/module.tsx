@@ -1,40 +1,36 @@
 import { createEpic, createReducer, useModule } from "typeless";
 import * as Rx from "typeless/rx";
+import { ajax } from "rxjs/ajax";
 import { booksUrl, bookUrl, typelessIndexUrl } from "../../../Consts";
 import { MODULE, BookActions, BookState } from "./interface";
 import { BooksActions } from "./../books/interface";
 import Book from "../entities/Book";
 
 function fetchBook(id: number) {
-  return Rx.fromPromise(
-    fetch(bookUrl(id), { method: "GET" }).then(
-      res => res.json() as Promise<Book>
-    )
+  return ajax({ url: bookUrl(id), method: "GET" }).pipe(
+    Rx.map(({ response }) => response as Book)
   );
 }
 
 function createBook(title: string, author: string) {
-  return Rx.fromPromise(
-    fetch(booksUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      },
-      body: JSON.stringify({ title, author })
-    })
-  );
+  return ajax({
+    url: booksUrl,
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    body: JSON.stringify({ title, author })
+  });
 }
 
 function updateBook({ id, title, author }: Book) {
-  return Rx.fromPromise(
-    fetch(bookUrl(id), {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      },
-      body: JSON.stringify({ title, author })
-    })
-  );
+  return ajax({
+    url: bookUrl(id),
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    body: JSON.stringify({ title, author })
+  });
 }
 
 const epic = createEpic(MODULE)
